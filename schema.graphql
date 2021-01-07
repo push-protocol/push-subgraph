@@ -1,0 +1,85 @@
+type Admin @entity {
+  id: ID!
+  count: BigInt!
+  previousAdmin: Bytes! # address
+  newAdmin: Bytes! # address
+}
+
+type Upgrade @entity {
+  id: ID!
+  address: Bytes! # address
+}
+
+type User @entity {
+  id: ID!
+  user: Bytes!
+  channel: Bytes!
+  subscribed: Boolean!
+}
+
+type Channel @entity {
+  # channel address
+  id: ID!
+
+  # ipfs
+  name: String
+  info: String
+  url: String
+  icon: String
+
+  subscribedCount: BigInt!
+  unsubscribedCount: BigInt!
+  userCount: BigInt!
+  notificationCount: BigInt!
+  activated: Boolean!
+
+  # contract
+  type: BigInt
+  deactivated: Boolean
+  poolContribution: BigInt
+  memberCount: BigInt
+  historicalZ: BigInt
+  fairShareCount: BigInt
+  lastUpdateBlock: BigInt 
+  startBlock: BigInt
+  updateBlock: BigInt
+  weight: BigInt
+
+  indexTimestamp: BigInt
+  indexBlock: BigInt
+}
+
+type EPNS @entity {
+  # epns address
+  id: ID!
+  channelCount: Int!
+  userCount: Int!
+  notificationCount: Int!
+ 
+}
+
+type Notification @entity {
+  id: ID!
+  userAddress: Bytes! 
+  channelAddress: Bytes! 
+  notificationTitle: String
+  notificationBody: String
+  dataType: String
+  dataSecret: String
+  dataASub: String
+  dataAMsg: String
+  dataACta: String
+  dataAImg: String
+  dataATime: String
+  indexTimestamp: BigInt!
+  indexBlock: BigInt!
+}
+
+type SubscriptionState @entity {
+  id: ID! 
+  userAddress: Bytes!
+  channelAddress: Bytes!
+  subscribed: Boolean!
+  indexTimestamp: BigInt!
+  indexBlock: BigInt!
+}

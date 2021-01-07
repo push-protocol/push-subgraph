@@ -1,0 +1,74 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: EPNSProxy
+    network: ropsten
+    source:
+      address: "0xb02E99b9634bD21A8e3E36cc7adb673287A8FeaC"
+      abi: EPNSProxy
+      startBlock: 8954190
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - Upgraded
+      abis:
+        - name: EPNSProxy
+          file: ./abis/EPNSProxy.json
+      eventHandlers:
+        - event: AdminChanged(address,address)
+          handler: handleAdminChanged
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: ./src/proxy.ts
+
+  - kind: ethereum/contract
+    name: EPNSCoreV3
+    network: ropsten
+    source:
+      address: "0xb02E99b9634bD21A8e3E36cc7adb673287A8FeaC"
+      abi: EPNSCoreV3
+      startBlock: 8954114
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - EPNS
+        - Channel
+      abis:
+        - name: EPNSCoreV3
+          file: ./abis/EPNSCoreV3.json
+ 
+      eventHandlers:
+        - event: AddChannel(indexed address,indexed uint8,bytes)
+          handler: handleAddChannel
+        - event: DeactivateChannel(indexed address)
+          handler: handleDeactivateChannel
+        - event: Donation(indexed address,uint256)
+          handler: handleDonation
+        - event: InterestClaimed(indexed address,indexed uint256)
+          handler: handleInterestClaimed
+        - event: PublicKeyRegistered(indexed address,bytes)
+          handler: handlePublicKeyRegistered
+        - event: SendNotification(indexed address,indexed address,bytes)
+          handler: handleSendNotification
+        - event: Subscribe(indexed address,indexed address)
+          handler: handleSubscribe
+        - event: Unsubscribe(indexed address,indexed address)
+          handler: handleUnsubscribe
+        - event: UpdateChannel(indexed address,bytes)
+          handler: handleUpdateChannel
+        - event: Withdrawal(indexed address,address,uint256)
+          handler: handleWithdrawal
+      file: ./src/coreV3.ts
+
+
+
+
+
